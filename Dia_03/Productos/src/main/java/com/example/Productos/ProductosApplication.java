@@ -28,16 +28,13 @@ public class ProductosApplication {
 
 			switch (option) {
 				case 1:
-					Sistema s = new Sistema();
-					s.mostrarProducto();
+					sistem.mostrarProducto();
 					break;
 				case 2:
-					Sistema i = new Sistema();
-					i.crearProducto();
+					sistem.crearProducto();
 					break;
 				case 3:
-                        /*Sistema t = new Sistema();
-                        t.editarProducto();*/
+                     sistem.editarProducto();
 					break;
 				case 0:
 					System.out.println("Gracias por ingresar, no vuelva");

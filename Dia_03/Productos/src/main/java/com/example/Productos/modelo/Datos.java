@@ -11,6 +11,7 @@ import java.util.ArrayList;
  * @author camper
  */
 public interface Datos {
-    ArrayList<Productos> mostrarProducto();
+    void mostrarProducto();
     void crearProducto();
+    void editarProducto();
 }

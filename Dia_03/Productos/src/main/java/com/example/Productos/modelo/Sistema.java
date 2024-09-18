@@ -23,26 +23,11 @@ public class Sistema implements Datos {
         cosa = new ArrayList<>();
     }
 
-    /*public void editarProducto(){
-        System.out.println("-----------");
-        System.out.println("Nombre del producto (actual: " + producto.getNombre() + "):");
-        String nombre = scanner.nextLine();
-        producto.setNombre(nombre);
-        System.out.println("Característica (actual: " + producto.getCaracteristica() + "):");
-        String caracteristica = scanner.nextLine();
-        producto.setCaracteristica(caracteristica);
-        System.out.println("Rango (actual: " + producto.getRango() + "):");
-        String rango = scanner.nextLine();
-        producto.setRango(rango);
-
-        System.out.println("Producto editado exitosamente.");
-        System.out.println("-----------");
-    }*/
 
     @Override
-    public ArrayList<Productos> mostrarProducto() {
+    public void mostrarProducto() {
         cosa.forEach((n) -> muestra(n));
-        return cosa;
+
     }
 
     public static void muestra(Productos a){
@@ -78,6 +63,30 @@ public class Sistema implements Datos {
         cosa.add(produ);
 
         System.out.println("Se guardo exitosamente");
+        System.out.println("-----------");
+    }
+
+    @Override
+    public void editarProducto() {
+        System.out.println("Coloca el index del dato a editar:");
+        int it = scanner.nextInt();
+        Productos product = cosa.get(it);
+
+        System.out.println("-----------");
+        System.out.println("Nombre del producto (actual: " + product.getNombre() + "):");
+        String nombre = scanner.nextLine();
+        nombre = scanner.nextLine();
+        product.setNombre(nombre);
+
+        System.out.println("Característica (actual: " + product.getCaracteristica() + "):");
+        String caracteristica = scanner.nextLine();
+        product.setCaracteristica(caracteristica);
+
+        System.out.println("Rango (actual: " + product.getRango() + "):");
+        String rango = scanner.nextLine();
+        product.setRango(rango);
+
+        System.out.println("Producto editado exitosamente.");
         System.out.println("-----------");
     }
 }
