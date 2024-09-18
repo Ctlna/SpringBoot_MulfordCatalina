@@ -9,5 +9,5 @@ package com.example.Productos;
  * @author camper
  */
 public interface Datos {
-    
+    String datos();
 }
