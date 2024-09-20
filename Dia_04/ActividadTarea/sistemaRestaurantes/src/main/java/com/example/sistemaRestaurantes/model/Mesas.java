@@ -39,7 +39,7 @@ public class Mesas {
         this.numero_mesa = numero_mesa;
     }
 
-    public boolean isOcupada() {
+    public boolean getOcupada() {
         return ocupada;
     }
 
