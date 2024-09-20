@@ -2,80 +2,70 @@ package com.example.sistemaRestaurantes.service;
 
 import com.example.sistemaRestaurantes.model.Platos;
 import com.example.sistemaRestaurantes.model.Mesas;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
-import org.springframework.stereotype.Component;
-
+import com.example.sistemaRestaurantes.repository.MesasRepository;
+import com.example.sistemaRestaurantes.repository.PlatosRepository;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class RestaurantManager {
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    // -------------------- Mesas
+    
+    @Autowired
+    private MesasRepository mesasRepository;
 
-    // Operaciones CRUD para Platos
-
-    @Transactional
-    public Platos guardarPlato(Platos plato) {
-        entityManager.persist(plato);
-        return plato;
+    // Registrar mesas
+    public Mesas registrarMesas(Mesas mesas){
+        return mesasRepository.save(mesas);
     }
 
-    @Transactional
-    public Platos actualizarPlato(Long id, Platos detallePlato) {
-        Platos plato = entityManager.find(Platos.class, id);
-        if (plato == null) {
-            throw new IllegalArgumentException("Plato no encontrado");
-        }
+    // Obtener el estado de las mesas
+    public List<Mesas> obtenerEstadoMesas() {
+        return mesasRepository.findAll();
+    }
+    
+    // Cambiar el estado de una mesa
+    public Mesas actualizarEstadoMesa(Long id, Boolean estaOcupada){
+        Mesas mesa = mesasRepository.findById(id).orElseThrow();
+        mesa.setOcupada(estaOcupada);
+        return mesasRepository.save(mesa);
+    }
+    
+    // Eliminar platos
+    public void eliminarMesas(Long id){
+        mesasRepository.deleteById(id);
+    }
+    
+    
+    // ---------------------- Platos
+    
+    @Autowired
+    private PlatosRepository platosRepository;
+
+    // Agregar nuevos platos
+    public Platos guardarPlatos(Platos platos){
+        return platosRepository.save(platos);
+    }
+
+    // Platos disponibles
+    public List<Platos> obtenerPlatosDisponibles() {
+        return platosRepository.findAll();
+    }
+    
+    // MODIFICAR detalles de un plato
+    public Platos actualizarPlatos(Long id, Platos detallePlato){
+        Platos plato = platosRepository.findById(id).orElseThrow();
         plato.setNombre(detallePlato.getNombre());
         plato.setPrecio(detallePlato.getPrecio());
         plato.setDisponibilidad(detallePlato.getDisponibilidad());
-        return plato;
+        return platosRepository.save(plato);
+    }
+    
+    // Eliminar platos
+    public void eliminarPlatos(Long id){
+        platosRepository.deleteById(id);
     }
 
-    @Transactional
-    public void eliminarPlato(Long id) {
-        Platos plato = entityManager.find(Platos.class, id);
-        if (plato != null) {
-            entityManager.remove(plato);
-        }
-    }
-
-    @Transactional
-    public List<Platos> obtenerTodosLosPlatos() {
-        return entityManager.createQuery("SELECT p FROM Platos p", Platos.class).getResultList();
-    }
-
-    // Operaciones CRUD para Mesas
-
-    @Transactional
-    public Mesas registrarMesa(Mesas mesa) {
-        entityManager.persist(mesa);
-        return mesa;
-    }
-
-    @Transactional
-    public Mesas actualizarMesa(Long id, Boolean estaOcupada) {
-        Mesas mesa = entityManager.find(Mesas.class, id);
-        if (mesa == null) {
-            throw new IllegalArgumentException("Mesa no encontrada");
-        }
-        mesa.setOcupada(estaOcupada);
-        return mesa;
-    }
-
-    @Transactional
-    public void eliminarMesa(Long id) {
-        Mesas mesa = entityManager.find(Mesas.class, id);
-        if (mesa != null) {
-            entityManager.remove(mesa);
-        }
-    }
-
-    @Transactional
-    public List<Mesas> obtenerEstadoMesas() {
-        return entityManager.createQuery("SELECT m FROM Mesas m", Mesas.class).getResultList();
-    }
 }
